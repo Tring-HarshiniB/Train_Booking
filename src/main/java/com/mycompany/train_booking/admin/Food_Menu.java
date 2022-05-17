@@ -25,7 +25,6 @@ public class Food_Menu extends Train_Details{
                 + String.format("%.2f", from) + " - " + String.format("%.2f", till);
     } 
     
-    //Scanner sc = new Scanner(System.in);
     static ArrayList<Food_Menu> breakFast = new ArrayList<>();
     static ArrayList<Food_Menu> lunch = new ArrayList<>();
     static ArrayList<Food_Menu> dinner = new ArrayList<>();
@@ -110,25 +109,16 @@ public class Food_Menu extends Train_Details{
         getTime = sc.nextDouble();
         for(int i = 0, j = 0, k = 0; i < breakFast.size() || j < lunch.size() || k < dinner.size(); i++, j++, k++){
             if(getTime >= 7.00 && getTime <= 10.00){
-                if (getTime == breakFast.get(i).from || getTime == breakFast.get(i).till) {
+                if (getTime >= breakFast.get(i).from || getTime <= breakFast.get(i).till) {
                     System.out.println(breakFast.get(i));
                 }
-                else if(getTime != breakFast.get(i).from || getTime != breakFast.get(i).till){
-                        System.out.println(" Sorry.....! No food available at specific time....");
-                }
                 if(getTime >= 12.00 && getTime <= 15.00){
-                    if (getTime == lunch.get(i).from || getTime == lunch.get(i).till) {
+                    if (getTime >= lunch.get(i).from || getTime <= lunch.get(i).till) {
                         System.out.println(lunch.get(j));
                     }
-                    else if(getTime != lunch.get(i).from || getTime != lunch.get(i).till){
-                        System.out.println(" Sorry.....! No food available at specific time....");
-                    }
                     if(getTime >= 19.00 && getTime <= 22.00){
-                        if (getTime == dinner.get(i).from || getTime == dinner.get(i).till) {
+                        if (getTime >= dinner.get(i).from || getTime <= dinner.get(i).till) {
                            System.out.println(dinner.get(k));
-                        }
-                        else if(getTime != dinner.get(i).from || getTime != dinner.get(i).till){
-                            System.out.println(" Sorry.....! No food available at specific time....");
                         }
                     }
                     return;

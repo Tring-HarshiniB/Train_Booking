@@ -3,8 +3,8 @@ package com.mycompany.train_booking.admin;
 import java.util.*;
 
 public class Admin {
-    private static final String name = "harshini";  //defined admin name 
-    private static final String pass = "trainpass";   //defined admin password
+    private static final String NAME = "harshini";  //defined admin name 
+    private static final String PASS = "trainpass";   //defined admin password
     int ch1;
     String aName,aPass;
     Scanner sc = new Scanner(System.in);
@@ -21,7 +21,7 @@ public class Admin {
         aName = sc.next();
         System.out.print(" \n Password : ");
         aPass = sc.next();
-        if(aName.equals(name) && aPass.equals(pass)){
+        if(aName.equals(NAME) && aPass.equals(PASS)){
             System.out.println(" \n Welcome " + aName);     //if condition true continues
         }
         else{
@@ -40,10 +40,10 @@ public class Admin {
                     fm.createMenu();    //calling creaateMenu method
                     break;
                 case 3:
-                    cd.seatReport();    //calling seatReport method
+                    Coach_Details.seatReport();    //calling seatReport method
                     break;
                 case 4:
-                    cd.costReport();   //calling costReport method
+                    Coach_Details.costReport();   //calling costReport method
                     break;
                 case 5:
                     return;     //return to Train_Booking class

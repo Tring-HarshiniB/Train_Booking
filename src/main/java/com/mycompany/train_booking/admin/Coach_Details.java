@@ -1,11 +1,6 @@
 package com.mycompany.train_booking.admin;
 
-import java.util.*;
-
 public class Coach_Details extends Train_Details {
-
-    Coach_Details() {
-    }
 
     final static int ROWS = 6;
     final static int SEATS_PER_ROW = 11;
@@ -19,8 +14,6 @@ public class Coach_Details extends Train_Details {
     final static int SLEEPER_PRICE = 1;
     final static int AC_SLEEPER_PRICE = 5;
 
-    /*HashMap<String, Integer> chairCar = new HashMap<>();
-     HashMap<String, Integer> sleeperClass = new HashMap<>();*/
     static int window = (ROWS * SEATS_PER_ROW) / 3;
     static int middle = (ROWS * SEATS_PER_ROW) / 3;
     static int asile = (ROWS * SEATS_PER_ROW) / 3;
@@ -74,10 +67,11 @@ public class Coach_Details extends Train_Details {
     public static void seatReport() {
         System.out.print(" \n Train : ");
         for (int j = 0; j < train.size(); j++) {
-            System.out.println(" \n " + (j+1) +". "+ train.get(j).trainName);
+            System.out.print(" \n " + (j+1) +". "+ train.get(j).trainName);
         }
-        System.out.println(" \n Enter Train name to check Seat Report : ");
+        System.out.print(" \n Enter Train name to check Seat Report : ");
         getAvailableTrain = sc.next();
+        noOfBookedSeats = new int[train.size()];
         for (int k = 0; k < train.size(); k++) {
             if (getAvailableTrain.equalsIgnoreCase(train.get(k).trainName)) {
                     availableChair = (window + middle + asile) * coach.get(k).chair;
@@ -93,7 +87,7 @@ public class Coach_Details extends Train_Details {
         System.out.println(" \n Booked Seats : " + booked);
     }
     
-    static String getCostTrain;
+    static String getTrainCost;
     
     //show cost report for total cost v/s revenue received
     public static void costReport(){
@@ -101,10 +95,10 @@ public class Coach_Details extends Train_Details {
         for (int j = 0; j < train.size(); j++) {
             System.out.println(" \n " + (j+1) +". "+ train.get(j).trainName);
         }
-        System.out.println(" \n Enter Train name to check Cost Report : ");
-        getCostTrain = sc.next();
+        System.out.print(" \n Enter Train name to check Cost Report : ");
+        getTrainCost = sc.next();
         for (int j = 0; j < train.size(); j++) {
-            if (getCostTrain.equalsIgnoreCase(train.get(j).trainName)) {
+            if (getTrainCost.equalsIgnoreCase(train.get(j).trainName)) {
                 totalCost(j);
             }
         }
@@ -127,22 +121,26 @@ public class Coach_Details extends Train_Details {
                 index = k;
                 seats = new int[totalNoOfSeats];
                 for (int j = 0; j < totalNoOfSeats; j++) {
-                    seats[j] = 0;          //setting all seats equal to 0 (Empty)
-                    noOfBookedSeats[j] = 0;
+                    seats[j] = 0;          //setting all seats equal to 0 (Empty)  
+                }
+                noOfBookedSeats = new int[train.size()];
+                for (int i = 0; i < train.size(); i++) {
+                    noOfBookedSeats[i] = 0;
                 }
             }
         }
-        System.out.println(" \n Enter no.of seats : ");
+        System.out.println(getTrain + " " + getCoach);
+        System.out.print(" \n Enter no.of seats : ");
         noOfSeats = sc.nextInt();
         int seatNumber = 0;
         for (int i = 0; i < noOfSeats; i++) {
             while (choice != 0) {
                 System.out.println(" \n Seat Types : ");
                 System.out.println(" \n 1. Window \n 2. Middle \n 3. Asile ");
-                System.out.println(" \n Choose " + (i + 1) + " seat preference : ");
+                System.out.print(" \n Choose " + (i + 1) + " seat preference : ");
                 choice = sc.nextInt();
                 if (choice == 1) {
-                    seatNumber += bookWindow();
+                    seatNumber += bookSeats(window);
                     if (seatNumber == -1) {
                         System.out.println(" \n Sorry...! No Window seat avilable ");
                     } else {
@@ -150,7 +148,7 @@ public class Coach_Details extends Train_Details {
                         break;
                     }
                 } else if (choice == 2) {
-                    seatNumber += bookMiddle();
+                    seatNumber += bookSeats(middle);
                     if (seatNumber == -1) {
                         System.out.println(" \n Sorry...! No Middle seat avilable ");
                     } else {
@@ -158,7 +156,7 @@ public class Coach_Details extends Train_Details {
                         break;
                     }
                 } else if (choice == 3) {
-                    seatNumber += bookAsile();
+                    seatNumber += bookSeats(asile);
                     if (seatNumber == -1) {
                         System.out.println(" \n Sorry...! No Asile seat avilable ");
                     } else {
@@ -174,36 +172,6 @@ public class Coach_Details extends Train_Details {
         }
         Food_Menu.bookFoodMenu();
     }
-    
-    public static int bookWindow(){
-        for(int i = 0; i < window; i++){
-            if(seats[i] == 0){
-                seats[i] = 1;
-                return i+1;
-            }
-        }
-        return -1;
-    }
-    
-    public static int bookMiddle(){
-        for(int i = 0; i < middle; i++){
-            if(seats[i] == 0){
-                seats[i] = 1;
-                return i+1;
-            }
-        }
-        return -1;
-    }
-    
-    public static int bookAsile(){
-        for(int i = 0; i < asile; i++){
-            if(seats[i] == 0){
-                seats[i] = 1;
-                return i+1;
-            }
-        }
-        return -1;
-    }
 
     public static void SleeperClass(String getTrain,String getCoach) {
         for (int k = 0; k < train.size(); k++) {
@@ -217,20 +185,24 @@ public class Coach_Details extends Train_Details {
                 seats = new int[totalNoOfSeats];
                 for (int j = 0; j < totalNoOfSeats; j++) {
                     seats[j] = 0;          //setting all seats equal to 0 (Empty)
-                    noOfBookedSeats[j] = 0;
+                }
+                int length = train.size();
+                noOfBookedSeats = new int[length];
+                for (int i = 0; i < train.size(); i++) {
+                    noOfBookedSeats[i] = 0;
                 }
             }
         }
-        System.out.println(" \n Enter no.of seats : ");
+        System.out.print(" \n Enter no.of seats : ");
         noOfSeats = sc.nextInt();
         int seatNumber = 0;
         for (int i = 0; i < noOfSeats; i++) {
             while (choice != 0) {
-                System.out.println(" \n Enter seat preference : ");
                 System.out.println(" \n 1. Upper \n 2. Middle \n 3. Lower \n 4. Side Upper \n 5. Side Lower ");
+                System.out.print(" \n Choose " + (i + 1) + " seat preference : ");
                 choice = sc.nextInt();
                 if (choice == 1) {
-                    seatNumber += bookUpper();
+                    seatNumber += bookSeats(upper);
                     if (seatNumber == -1) {
                         System.out.println(" \n Sorry...! No Upper seat avilable ");
                     } else {
@@ -238,7 +210,7 @@ public class Coach_Details extends Train_Details {
                         break;
                     }
                 } else if (choice == 2) {
-                    seatNumber += bookMid();
+                    seatNumber += bookSeats(mid);
                     if (seatNumber == -1) {
                         System.out.println(" \n Sorry...! No Middle seat avilable ");
                     } else {
@@ -246,7 +218,7 @@ public class Coach_Details extends Train_Details {
                         break;
                     }
                 } else if (choice == 3) {
-                    seatNumber += bookLower();
+                    seatNumber += bookSeats(lower);
                     if (seatNumber == -1) {
                         System.out.println(" \n Sorry...! No Lower seat avilable ");
                     } else {
@@ -254,7 +226,7 @@ public class Coach_Details extends Train_Details {
                         break;
                     }
                 } else if (choice == 4) {
-                    seatNumber += bookUpperSide();
+                    seatNumber += bookSeats(upperSide);
                     if (seatNumber == -1) {
                         System.out.println(" \n Sorry...! No Side Upper seat avilable ");
                     } else {
@@ -262,7 +234,7 @@ public class Coach_Details extends Train_Details {
                         break;
                     }
                 }else if (choice == 5) {
-                    seatNumber += bookLowerSide();
+                    seatNumber += bookSeats(lowerSide);
                     if (seatNumber == -1) {
                         System.out.println(" \n Sorry...! No Side Lower seat avilable ");
                     } else {
@@ -279,53 +251,13 @@ public class Coach_Details extends Train_Details {
         Food_Menu.bookFoodMenu();
     }
     
-    public static int bookUpper(){
-        for(int i = 0; i < upper; i++){
+    public static int bookSeats(int seatType){
+        for(int i = 0; i < seatType; i++){
             if(seats[i] == 0){
                 seats[i] = 1;
                 return i+1;
             }
         }
         return -1;
-    }
-    
-    public static int bookMid(){
-        for(int i = 0; i < mid; i++){
-            if(seats[i] == 0){
-                seats[i] = 1;
-                return i+1;
-            }
-        }
-        return -1;
-    }
-    
-    public static int bookLower(){
-        for(int i = 0; i < lower; i++){
-            if(seats[i] == 0){
-                seats[i] = 1;
-                return i+1;
-            }
-        }
-        return -1;
-    }
-    
-    public static int bookUpperSide(){
-        for(int i = 0; i < upperSide; i++){
-            if(seats[i] == 0){
-                seats[i] = 1;
-                return i+1;
-            }
-        }
-        return -1;
-    }
-    
-    public static int bookLowerSide(){
-        for(int i = 0; i < lowerSide; i++){
-            if(seats[i] == 0){
-                seats[i] = 1;
-                return i+1;
-            }
-        }
-        return -1;
-    }
+    }  
 }

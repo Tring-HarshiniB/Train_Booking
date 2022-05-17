@@ -99,7 +99,6 @@ public class Train_Details {
             if (startLoc.equalsIgnoreCase(train.get(j).startLocation) && endLoc.equalsIgnoreCase(train.get(j).endLocation)) {
                 System.out.println(train.get(j));
                 System.out.println(coach.get(j));
-                seatPreference();
             } else if (!startLoc.equalsIgnoreCase(train.get(j).startLocation) && !endLoc.equalsIgnoreCase(train.get(j).endLocation)) {
                 System.out.println(" \n Sorry..... no train available for specified location ! ");
                 return;
@@ -107,6 +106,7 @@ public class Train_Details {
                 return;
             }
         }
+        seatPreference();
     }
 
     static String ch, getTrain, getCoach;

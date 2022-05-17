@@ -12,8 +12,7 @@ public class Train_Booking {
         Admin a = new Admin();      //creating object for Admin class
         User u = new User();            //creating object for User class
          while (true) {
-             System.out.println();
-            System.out.print(" \n\t *** TRAIN BOOKING *** ");
+            System.out.print(" \n\n\t *** TRAIN BOOKING *** ");
             System.out.println(" \n 1. Admin \n 2. User \n 3. Quit");
             System.out.print("Enter your choice : ");
             ch = sc.nextInt();

@@ -1,9 +1,8 @@
 package com.mycompany.train_booking;
 
 import java.util.*;
-//import com.mycompany.train_booking.admin.Admin;
+
 import com.mycompany.train_booking.admin.Train_Details;
-import com.mycompany.train_booking.admin.Food_Menu;
 
 public class User{
 
@@ -12,7 +11,6 @@ public class User{
     String uname,upass;
     Scanner sc = new Scanner(System.in);
     Train_Details td2 = new Train_Details();    //creating object for Train_Details class
-    Food_Menu fm2 = new Food_Menu();      //creating object for Food_Menu class
     
     public void user() {
         while (true) {
@@ -80,16 +78,11 @@ public class User{
                     td2.browseTrains();     //calling browseTrain method
                     break;
                 case 2:
-                    fm2.bookFoodMenu();     //calling foodMenu method
-                    break;
-                case 3:
                     return;
                 default:
                     System.out.println(" \n Invalid Choice ");
                     break;
             }
         }
-    }
-    
-    
+    }  
 }
