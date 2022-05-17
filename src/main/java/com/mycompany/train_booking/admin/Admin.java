@@ -8,14 +8,12 @@ public class Admin {
     int ch1;
     String aName,aPass;
     Scanner sc = new Scanner(System.in);
-    Train_Details td = new Train_Details();     //creating object for Train_Details class
-    Food_Menu fm = new Food_Menu();       //creating object for Food_Menu class
-    Coach_Details cd = new Coach_Details();
+    TrainDetails td = new TrainDetails();     //creating object for Train_Details class
+    FoodMenu fm = new FoodMenu();       //creating object for Food_Menu class
     
     //admin Sign in
     public void admin() {
         System.out.println(" \n \t ADMIN ");
-        System.out.println(" \t ******* ");
         System.out.println(" \n SIGN IN ");
         System.out.print(" \n Admin Name : ");
         aName = sc.next();
@@ -40,10 +38,10 @@ public class Admin {
                     fm.createMenu();    //calling creaateMenu method
                     break;
                 case 3:
-                    Coach_Details.seatReport();    //calling seatReport method
+                    CoachDetails.seatReport();    //calling seatReport method
                     break;
                 case 4:
-                    Coach_Details.costReport();   //calling costReport method
+                    CoachDetails.costReport();   //calling costReport method
                     break;
                 case 5:
                     return;     //return to Train_Booking class

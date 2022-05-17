@@ -2,7 +2,7 @@ package com.mycompany.train_booking;
 
 import java.util.*;
 
-import com.mycompany.train_booking.admin.Train_Details;
+import com.mycompany.train_booking.admin.TrainDetails;
 
 public class User{
 
@@ -10,12 +10,11 @@ public class User{
     String name, pass, repass;
     String uname,upass;
     Scanner sc = new Scanner(System.in);
-    Train_Details td2 = new Train_Details();    //creating object for Train_Details class
+    TrainDetails td2 = new TrainDetails();    //creating object for Train_Details class
     
     public void user() {
         while (true) {
             System.out.println(" \n \t USER ");
-            System.out.println(" \t ***** ");
             System.out.println(" \n 1. Sign Up \n 2. Sign In \n 3. Exit ");
             System.out.print(" Enter your choice : ");
             ch1 = sc.nextInt();
@@ -38,7 +37,6 @@ public class User{
     //Sign up to create new user account
     public void signUp() {
         System.out.println(" \n \t SIGN UP ");
-        System.out.println(" \t ***** ** ");
         System.out.print(" \n Enter User Name : ");
         name = sc.next();
         System.out.print(" \n Enter Password(only characters) : ");
@@ -56,7 +54,6 @@ public class User{
     //Sign in for already registered user
     public void signIn() {
         System.out.println(" \n \t SIGN IN ");
-        System.out.println(" \t ***** ** ");
         System.out.print(" \n User Name : ");
         uname = sc.next();
         System.out.print(" \n Password : ");
