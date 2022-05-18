@@ -124,13 +124,13 @@ public class TrainDetails {
                         System.out.print(" \n Enter Coach(code) : ");
                         getCoach = sc.next();
                         if (getCoach.equalsIgnoreCase("CC")) {
-                            CoachDetails.chairCar(getTrain,getCoach);
+                            CoachDetails.coach(getTrain,getCoach);
                         } else if (getCoach.equalsIgnoreCase("ACC")) {
-                            CoachDetails.chairCar(getTrain,getCoach);
+                            CoachDetails.coach(getTrain,getCoach);
                         } else if (getCoach.equalsIgnoreCase("SC")) {
-                            CoachDetails.sleeperClass(getTrain,getCoach);
+                            CoachDetails.coach(getTrain,getCoach);
                         } else if (getCoach.equalsIgnoreCase("ASC")) {
-                            CoachDetails.sleeperClass(getTrain,getCoach);
+                            CoachDetails.coach(getTrain,getCoach);
                         } else {
                             return;
                         }

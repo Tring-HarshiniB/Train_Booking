@@ -60,25 +60,25 @@ public class CoachDetails extends TrainDetails {
 
     }
 
-    static int available = 0,booked = 0,totalAvailable,availableChair,availableAcChair,avilableSleeper,availableAcSleeper;
+    static int available = 0, booked = 0, totalAvailable, availableChair, availableAcChair, avilableSleeper, availableAcSleeper;
     static String getAvailableTrain;
-    
+
     //show seat report for avilable seats v/s booked seats
     public static void seatReport() {
         System.out.print(" \n Train : ");
         for (int j = 0; j < train.size(); j++) {
-            System.out.print(" \n " + (j+1) +". "+ train.get(j).trainName);
+            System.out.print(" \n " + (j + 1) + ". " + train.get(j).trainName);
         }
         System.out.print(" \n Enter Train name to check Seat Report : ");
         getAvailableTrain = sc.next();
         noOfBookedSeats = new int[train.size()];
         for (int k = 0; k < train.size(); k++) {
             if (getAvailableTrain.equalsIgnoreCase(train.get(k).trainName)) {
-                    availableChair = (window + middle + asile) * coach.get(k).chair;
-                    availableAcChair = (window + middle + asile) * coach.get(k).acChair;
-                    avilableSleeper = (upper + mid + lower + upperSide + lowerSide) * coach.get(k).sleeper;
-                    availableAcSleeper = (upper + mid + lower + upperSide + lowerSide) * coach.get(k).acSleeper;
-                    booked = noOfBookedSeats[k];
+                availableChair = (window + middle + asile) * coach.get(k).chair;
+                availableAcChair = (window + middle + asile) * coach.get(k).acChair;
+                avilableSleeper = (upper + mid + lower + upperSide + lowerSide) * coach.get(k).sleeper;
+                availableAcSleeper = (upper + mid + lower + upperSide + lowerSide) * coach.get(k).acSleeper;
+                booked = noOfBookedSeats[k];
             }
         }
         totalAvailable = availableChair + availableAcChair + avilableSleeper + availableAcSleeper;
@@ -86,14 +86,14 @@ public class CoachDetails extends TrainDetails {
         System.out.println(" \n Available Seats : " + available);
         System.out.println(" \n Booked Seats : " + booked);
     }
-    
+
     static String getTrainCost;
-    
+
     //show cost report for total cost v/s revenue received
-    public static void costReport(){
+    public static void costReport() {
         System.out.print(" \n Train : ");
         for (int j = 0; j < train.size(); j++) {
-            System.out.println(" \n " + (j+1) +". "+ train.get(j).trainName);
+            System.out.println(" \n " + (j + 1) + ". " + train.get(j).trainName);
         }
         System.out.print(" \n Enter Train name to check Cost Report : ");
         getTrainCost = sc.next();
@@ -109,14 +109,17 @@ public class CoachDetails extends TrainDetails {
     static int seats[];
     static int noOfBookedSeats[];
 
-    public static void chairCar(String getTrain,String getCoach) {
+    public static void coach(String getTrain, String getCoach){
         for (int k = 0; k < train.size(); k++) {
             if (getTrain.equalsIgnoreCase(train.get(k).trainName)) {
-                if(getCoach.equalsIgnoreCase("CC")){
+                if (getCoach.equalsIgnoreCase("CC")) {
                     totalNoOfSeats = (window + middle + asile) * coach.get(k).chair;
-                }
-                else if(getCoach.equalsIgnoreCase("ACC")){
+                } else if (getCoach.equalsIgnoreCase("ACC")) {
                     totalNoOfSeats = (window + middle + asile) * coach.get(k).acChair;
+                }else if (getCoach.equalsIgnoreCase("SC")) {
+                    totalNoOfSeats = (upper + mid + lower + upperSide + lowerSide) * coach.get(k).sleeper;
+                } else if (getCoach.equalsIgnoreCase("ASC")) {
+                    totalNoOfSeats = (upper + mid + lower + upperSide + lowerSide) * coach.get(k).acSleeper;
                 }
                 index = k;
                 seats = new int[totalNoOfSeats];
@@ -127,9 +130,16 @@ public class CoachDetails extends TrainDetails {
                 for (int i = 0; i < train.size(); i++) {
                     noOfBookedSeats[i] = 0;
                 }
+                if (getCoach.equalsIgnoreCase("CC") || getCoach.equalsIgnoreCase("ACC")) {
+                    chairCar(k);
+                }else if(getCoach.equalsIgnoreCase("SC") || getCoach.equalsIgnoreCase("ASC")){
+                    sleeperClass(k);
+                }
             }
         }
-        System.out.println(getTrain + " " + getCoach);
+    }
+    
+    public static void chairCar(int index) {
         System.out.print(" \n Enter no.of seats : ");
         noOfSeats = sc.nextInt();
         int seatNumber = 0;
@@ -139,125 +149,111 @@ public class CoachDetails extends TrainDetails {
                 System.out.println(" \n 1. Window \n 2. Middle \n 3. Asile ");
                 System.out.print(" \n Choose " + (i + 1) + " seat preference : ");
                 choice = sc.nextInt();
-                if (choice == 1) {
-                    seatNumber += bookSeats(window);
-                    if (seatNumber == -1) {
-                        System.out.println(" \n Sorry...! No Window seat avilable ");
-                    } else {
-                        System.out.println(" \n Window seat Booked !");
-                        break;
+                switch (choice) {
+                    case 1:
+                        seatNumber += bookSeats(window);
+                        if (seatNumber == -1) {
+                            System.out.println(" \n Sorry...! No Window seat avilable ");
+                        } else {
+                            System.out.println(" \n Window seat Booked !");
+                            break;
+                        }
+                    case 2:
+                        seatNumber += bookSeats(middle);
+                        if (seatNumber == -1) {
+                            System.out.println(" \n Sorry...! No Middle seat avilable ");
+                        } else {
+                            System.out.println(" \n Middle seat Booked !");
+                            break;
+                        }
+                    case 3:
+                        seatNumber += bookSeats(asile);
+                        if (seatNumber == -1) {
+                            System.out.println(" \n Sorry...! No Asile seat avilable ");
+                        } else {
+                            System.out.println(" \n Asile seat Booked !");
+                            break;
+                        }
+                    default: {
+                        System.out.println(" \n Invalid Choice ");
+                        choice = 0;
                     }
-                } else if (choice == 2) {
-                    seatNumber += bookSeats(middle);
-                    if (seatNumber == -1) {
-                        System.out.println(" \n Sorry...! No Middle seat avilable ");
-                    } else {
-                        System.out.println(" \n Middle seat Booked !");
-                        break;
-                    }
-                } else if (choice == 3) {
-                    seatNumber += bookSeats(asile);
-                    if (seatNumber == -1) {
-                        System.out.println(" \n Sorry...! No Asile seat avilable ");
-                    } else {
-                        System.out.println(" \n Asile seat Booked !");
-                        break;
-                    }
-                } else {
-                    System.out.println(" \n Invalid Choice ");
-                    choice = 0;
+                    noOfBookedSeats[index] = seatNumber;
                 }
-                noOfBookedSeats[index] = seatNumber;          
             }
         }
         FoodMenu.bookFoodMenu();
     }
 
-    public static void sleeperClass(String getTrain,String getCoach) {
-        for (int k = 0; k < train.size(); k++) {
-            if (getTrain.equalsIgnoreCase(train.get(k).trainName)) {
-                if(getCoach.equalsIgnoreCase("SC")){
-                    totalNoOfSeats = (upper + mid + lower + upperSide + lowerSide) * coach.get(k).sleeper;
-                }
-                else if(getCoach.equalsIgnoreCase("ASC")){
-                    totalNoOfSeats = (upper + mid + lower + upperSide + lowerSide) * coach.get(k).acSleeper;
-                }
-                seats = new int[totalNoOfSeats];
-                for (int j = 0; j < totalNoOfSeats; j++) {
-                    seats[j] = 0;          //setting all seats equal to 0 (Empty)
-                }
-                int length = train.size();
-                noOfBookedSeats = new int[length];
-                for (int i = 0; i < train.size(); i++) {
-                    noOfBookedSeats[i] = 0;
-                }
-            }
-        }
+    public static void sleeperClass(int index) {
         System.out.print(" \n Enter no.of seats : ");
         noOfSeats = sc.nextInt();
         int seatNumber = 0;
         for (int i = 0; i < noOfSeats; i++) {
             while (choice != 0) {
+                System.out.println(" \n Seat Types : ");
                 System.out.println(" \n 1. Upper \n 2. Middle \n 3. Lower \n 4. Side Upper \n 5. Side Lower ");
                 System.out.print(" \n Choose " + (i + 1) + " seat preference : ");
                 choice = sc.nextInt();
-                if (choice == 1) {
-                    seatNumber += bookSeats(upper);
-                    if (seatNumber == -1) {
-                        System.out.println(" \n Sorry...! No Upper seat avilable ");
-                    } else {
-                        System.out.println(" \n Upper seat Booked !");
-                        break;
+                switch (choice) {
+                    case 1:
+                        seatNumber += bookSeats(upper);
+                        if (seatNumber == -1) {
+                            System.out.println(" \n Sorry...! No Upper seat avilable ");
+                        } else {
+                            System.out.println(" \n Upper seat Booked !");
+                            break;
+                        }
+                    case 2:
+                        seatNumber += bookSeats(mid);
+                        if (seatNumber == -1) {
+                            System.out.println(" \n Sorry...! No Middle seat avilable ");
+                        } else {
+                            System.out.println(" \n Middle seat Booked !");
+                            break;
+                        }
+                    case 3:
+                        seatNumber += bookSeats(lower);
+                        if (seatNumber == -1) {
+                            System.out.println(" \n Sorry...! No Lower seat avilable ");
+                        } else {
+                            System.out.println(" \n Lower seat Booked !");
+                            break;
+                        }
+                    case 4:
+                        seatNumber += bookSeats(upperSide);
+                        if (seatNumber == -1) {
+                            System.out.println(" \n Sorry...! No Side Upper seat avilable ");
+                        } else {
+                            System.out.println(" \n Side Upper seat Booked !");
+                            break;
+                        }
+                    case 5:
+                        seatNumber += bookSeats(lowerSide);
+                        if (seatNumber == -1) {
+                            System.out.println(" \n Sorry...! No Side Lower seat avilable ");
+                        } else {
+                            System.out.println(" \n Side Lower seat Booked !");
+                            break;
+                        }
+                    default: {
+                        System.out.println(" \n Invalid Choice ");
+                        choice = 0;
                     }
-                } else if (choice == 2) {
-                    seatNumber += bookSeats(mid);
-                    if (seatNumber == -1) {
-                        System.out.println(" \n Sorry...! No Middle seat avilable ");
-                    } else {
-                        System.out.println(" \n Middle seat Booked !");
-                        break;
-                    }
-                } else if (choice == 3) {
-                    seatNumber += bookSeats(lower);
-                    if (seatNumber == -1) {
-                        System.out.println(" \n Sorry...! No Lower seat avilable ");
-                    } else {
-                        System.out.println(" \n Lower seat Booked !");
-                        break;
-                    }
-                } else if (choice == 4) {
-                    seatNumber += bookSeats(upperSide);
-                    if (seatNumber == -1) {
-                        System.out.println(" \n Sorry...! No Side Upper seat avilable ");
-                    } else {
-                        System.out.println(" \n Side Upper seat Booked !");
-                        break;
-                    }
-                }else if (choice == 5) {
-                    seatNumber += bookSeats(lowerSide);
-                    if (seatNumber == -1) {
-                        System.out.println(" \n Sorry...! No Side Lower seat avilable ");
-                    } else {
-                        System.out.println(" \n Side Lower seat Booked !");
-                        break;
-                    }
-                }else {
-                    System.out.println(" \n Invalid Choice ");
-                    choice = 0;
+                    noOfBookedSeats[index] = seatNumber;
                 }
-                noOfBookedSeats[index] = seatNumber;
             }
         }
         FoodMenu.bookFoodMenu();
     }
-    
-    public static int bookSeats(int seatType){
-        for(int i = 0; i < seatType; i++){
-            if(seats[i] == 0){
+
+    public static int bookSeats(int seatType) {
+        for (int i = 0; i < seatType; i++) {
+            if (seats[i] == 0) {
                 seats[i] = 1;
-                return i+1;
+                return i + 1;
             }
         }
         return -1;
-    }  
+    }
 }
